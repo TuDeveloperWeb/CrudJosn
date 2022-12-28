@@ -61,7 +61,7 @@
     </div>
     <!-- Contenido General -->
 
-    <form class="form">
+    <form class="form form-articulo" action="{{ $action }}" method="POST" autocomplete="off" enctype="multipart/form-data" >
         @csrf
         <div class="card-body">
             <div class="row">
