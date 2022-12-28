@@ -18,7 +18,22 @@ Route::get('/', function () {
 });
 
 
+
+
+
 Route::get('/articulo','App\Http\Controllers\ControllerArticulo@index');
-Route::get('/show','App\Http\Controllers\ControllerArticulo@show')->name('mostrarDatos');
-Route::get('/editar/{id}','App\Http\Controllers\ControllerArticulo@edit');
-Route::put('/update','App\Http\Controllers\ControllerArticulo@update');
+
+
+Route::get('/articulo/crear','App\Http\Controllers\ControllerArticulo@create');
+
+Route::get('/prueba/{id}/','App\Http\Controllers\ControllerArticulo@user');
+
+
+/* Mostrando la lista de los productos */
+Route::get('articulo/list','App\Http\Controllers\ControllerArticulo@getArticulo');
+Route::put('articulo/aprobar','App\Http\Controllers\ControllerArticulo@procesarVenta');
+Route::put('articulo/rechazar','App\Http\Controllers\ControllerArticulo@rechazarVenta');
+
+Route::get('articulo/detalleArticulo/{id}/','App\Http\Controllers\ControllerArticulo@detalleVenta');
+
+

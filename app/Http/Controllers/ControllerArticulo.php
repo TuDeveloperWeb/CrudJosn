@@ -6,6 +6,7 @@ use App\Models\Articulo;
 use App\Models\Catalogo;
 use Illuminate\Http\Request;
 
+
 class ControllerArticulo extends Controller
 {
     /**
@@ -15,14 +16,92 @@ class ControllerArticulo extends Controller
      */
     public function index()
     {
-        $datos = Articulo::where('estado',1)->get();
-
-        return $datos;
-
-
-        return view('articulos.index')->with('datos',$datos);
+       
+        return view('articulos.index');
 
     }
+
+
+
+
+    public function user(Request $request,$id)
+    {
+
+       // $datos = Articulo::where('estado',1)->get();
+
+
+       $articulo = Catalogo::where('id',$id)->get();
+   
+        dd($articulo);
+
+
+    }
+
+
+    public function detalleVenta(Request $request,$id)
+    {
+
+        $articulo = Catalogo::where('id',$id)->get();
+
+        return response()->json($articulo);
+
+        
+
+    }
+
+
+    public function getArticulo(Request $request){
+
+        if ($request->ajax()) {
+            $datos = Articulo::where('estado',1)->get();
+
+
+
+            return datatables()->of($datos)
+                ->addIndexColumn()
+                ->addColumn('check', function($chk){
+                    $checkBtn = '<input type="checkbox" class="btn-check valores" id="btn-check-outlined " value="'.$chk->id.'"  name="opcion" > ';
+                    return $checkBtn;
+                })
+                ->addColumn('detalle', function($row){
+                    $checkDetal = '<a data-role="update" data-id="'.$row->id.'" class="editar cursor">
+                    <i class="fa-regular fa-hand-point-up"></i></a> ';
+                    return $checkDetal;
+                })
+                ->rawColumns(['check','detalle'])
+                ->make(true);
+        }
+
+    }
+
+    public function procesarVenta(Request $request){
+
+        $articulo = Articulo::find($request->id);
+
+        $articulo->observacion = $request->observacion;
+        $articulo->estado = $request->estado;
+        $articulo->save();
+
+
+        return response()->json(['mensaje'=>'Procesado Correctamente']);
+
+    }
+
+
+    public function rechazarVenta(Request $request){
+
+        $articulo = Articulo::find($request->id);
+
+        $articulo->observacion = $request->observacion;
+        $articulo->estado = $request->estado;
+        $articulo->save();
+
+
+        return response()->json(['mensaje'=>'Procesado Correctamente']);
+
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +110,8 @@ class ControllerArticulo extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('articulos.create');
     }
 
     /**
