@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Articulo;
 use App\Models\Catalogo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class ControllerArticulo extends Controller
@@ -32,7 +33,7 @@ class ControllerArticulo extends Controller
 
        $articulo = Catalogo::where('id',$id)->get();
    
-        dd($articulo);
+       // dd($articulo);
 
 
     }
@@ -124,7 +125,51 @@ class ControllerArticulo extends Controller
     {
         $data=$request->all();
 
-        dd($data);
+        $estado=6;
+        
+
+       dd($data);
+        
+        
+        if(isset($data['btnEnviar']) && in_array($data['btnEnviar'],$data)){
+            $estado=1;
+            
+        }
+
+        $pre             = new Articulo;
+        $pre->codigo       = $data['Codigo'];
+        $pre->descripcion    = $data['Descripcion'];
+        $pre->cantidad    = $data['Cantidad'];
+        $pre->precio    = $data['Precio'];
+        $pre->estado  = $estado;
+        $pre->observacion=DB::raw("NULL");
+        
+        $pre->save();
+        $idVenta = $pre->id;//Se autogenera
+
+      
+        if($idVenta>0 && count($data['Detalle'])>0){
+            $cantidad = count($data['Detalle']);
+
+           //dd($cantidad);
+            for($i=0; $i<$cantidad; $i++){
+
+
+
+                $det            = new Catalogo;
+                $det->id       = $idVenta;
+                $det->descripcion   = $data['Detalle'][$i];
+                $det->telefono      = $data['Telefono'][$i];
+                $det->direccion     = $data['Direccion'][$i];
+                $det->save();
+
+            }
+
+        }    
+
+        return view('articulos.index');
+        
+  
     }
 
     /**

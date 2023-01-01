@@ -34,6 +34,9 @@ Route::get('articulo/list','App\Http\Controllers\ControllerArticulo@getArticulo'
 Route::put('articulo/aprobar','App\Http\Controllers\ControllerArticulo@procesarVenta');
 Route::put('articulo/rechazar','App\Http\Controllers\ControllerArticulo@rechazarVenta');
 
+Route::post('articulo/guardar','App\Http\Controllers\ControllerArticulo@store')->name('articulo.guardar');
+
+
 Route::get('articulo/detalleArticulo/{id}/','App\Http\Controllers\ControllerArticulo@detalleVenta');
 
 

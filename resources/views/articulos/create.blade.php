@@ -61,7 +61,7 @@
     </div>
     <!-- Contenido General -->
 
-    <form class="form form-articulo" action="{{ $action }}" method="POST" autocomplete="off" enctype="multipart/form-data" >
+    <form class="form form-articulo" action="{{ route('articulo.guardar') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
             <div class="row">
@@ -112,6 +112,25 @@
             </div>
         </div>
 
+        <div id="imagenes" style="display: block;">
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td style="width:50%">Documentos</td>
+                            <!-- <td>Acción</td> -->
+                        </tr>
+                    </thead>
+                    <tbody id="tbl_files">
+                        <tr>
+                            <td>
+                                <input type="file" name="Adjunto[]" id="Adjunto">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <div class="card">
             <div class="card-header">
@@ -165,6 +184,20 @@
 
         </div>
 
+
+        <div class="form-actions text-right mx-3">
+            <button type="submit" class="btn btn-primary" name="btn" value="Guardar">
+                <i class="la la-check-square-o"></i> Guardar
+            </button>
+
+            <button type="submit" class="btn btn-success envio" name="btnEnviar" value="Guardar y Enviar">
+                <i class="la la--check-square-o"></i> Guardar y Enviar
+            </button>
+
+        </div>
+
+
+
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -204,6 +237,17 @@
                                     <div class="controls">
                                         <label>Direccion</label>
                                         <input type="text" id="DireccionF" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-12 col-sm-12">
+                                <div class="form-group">
+                                    <div class="controls" id="adjunto">
+                                        <label>Documentos</label>
+                                        <input type="file" class="form-control-file" name="Documento[]" id="DocumentoF">
                                     </div>
                                 </div>
                             </div>
